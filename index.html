@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <!-- ============================== META / FUENTES / CSS ============================== -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tsoft Reservas | Calendario y Gestión</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <!-- =================================== TOPBAR / NAV =================================== -->
+  <header class="topbar">
+    <div class="container row between center">
+      <div class="brand">Tsoft Reservas</div>
+      <nav class="nav">
+        <a href="#inicio" class="nav__link">Inicio</a>
+        <a href="#servicios" class="nav__link">Servicios</a>
+        <a href="#calendario" class="nav__link">Calendario</a>
+        <a href="#reservas" class="nav__link">Reservar</a>
+        <button id="btnAdmin" class="btn btn--ghost">Admin</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ======================================== HERO ======================================= -->
+  <main id="inicio" class="hero">
+    <div class="container hero__grid">
+      <div>
+        <h1>Gestioná tus reservas con un flujo simple y profesional</h1>
+        <p>Calendario claro, confirmación por WhatsApp y panel de administración.</p>
+        <div class="row gap">
+          <a href="#reservas" class="btn">Reservar ahora</a>
+          <a href="#calendario" class="btn btn--ghost">Ver disponibilidad</a>
+        </div>
+      </div>
+      <div class="hero__card">
+        <h3>Próxima fecha destacada</h3>
+        <p id="proximaFecha">Cargando…</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- ====================================== SERVICIOS ==================================== -->
+  <section id="servicios" class="container section">
+    <h2>Servicios</h2>
+    <div class="grid cards">
+      <article class="card hover-card">
+        <h3>Salón principal</h3>
+        <p>Espacio amplio y luminoso para eventos.</p>
+        <div class="tags"><span class="tag">100 pers</span><span class="tag">Climatizado</span></div>
+      </article>
+      <article class="card hover-card">
+        <h3>Piscina</h3>
+        <p>Área al aire libre con solárium.</p>
+        <div class="tags"><span class="tag">Deck</span><span class="tag">Parrilla</span></div>
+      </article>
+      <article class="card hover-card">
+        <h3>Catering</h3>
+        <p>Opciones personalizadas.</p>
+        <div class="tags"><span class="tag">Veggie</span><span class="tag">Infantil</span></div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================================== CALENDARIO ==================================== -->
+  <section id="calendario" class="container section">
+    <h2>Calendario</h2>
+
+    <!-- Controles del calendario: selector de mes + botón HOY -->
+    <div class="calendar__controls">
+  <label class="field">
+    <span>Mes</span>
+    <input type="month" id="mesInput" />
+  </label>
+
+  <!-- selector de vista -->
+  <label class="field">
+    <span>Vista</span>
+    <select id="vistaSelect">
+      <option value="month" selected>Mes</option>
+      <option value="week">Semana</option>
+    </select>
+  </label>
+
+  <!-- botón HOY -->
+  <button id="btnHoy" class="btn btn--today" title="Ir a hoy" accesskey="h">
+    <svg aria-hidden="true" viewBox="0 0 24 24" class="btn__icon">
+      <path d="M12 8v4l3 3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/>
+    </svg>
+    <span>Hoy</span>
+  </button>
+  <span id="srStatus" class="sr-only" aria-live="polite"></span>
+</div>
+
+
+    <!-- Grilla de días -->
+    <div id="gridCalendario" class="calendar__grid"></div>
+
+    <!-- Leyenda de estados -->
+    <p class="legend">
+      <span class="legend__item"><i class="dot dot--ok"></i>Disponible</span>
+      <span class="legend__item"><i class="dot dot--busy"></i>Reservado</span>
+      <span class="legend__item"><i class="dot dot--pending"></i>Pendiente</span>
+    </p>
+  </section>
+
+  <!-- ======================================== RESERVAS =================================== -->
+  <section id="reservas" class="container section">
+    <h2>Crear reserva</h2>
+    <form id="formReserva" class="form card">
+      <!-- Campos principales -->
+      <div class="grid form__grid">
+        <label class="field">
+          <span>Nombre y Apellido</span>
+          <input type="text" id="nombre" required />
+        </label>
+        <label class="field">
+          <span>Teléfono (WhatsApp)</span>
+          <input type="tel" id="telefono" required placeholder="54911XXXXXXXX" />
+        </label>
+        <label class="field">
+          <span>Fecha</span>
+          <input type="date" id="fecha" required />
+        </label>
+        <label class="field">
+          <span>Hora</span>
+          <select id="hora" required></select>
+        </label>
+        <label class="field">
+          <span>Cantidad de personas</span>
+          <input type="number" id="personas" min="1" max="300" value="20" required />
+        </label>
+         <label class="field">
+          <span>Tipo de evento</span>
+          <select id="tipo" required>
+            <option value="" selected disabled>Seleccioná…</option>
+            <option>Cumpleaños</option>
+            <option>Casamiento</option>
+            <option>Reunión corporativa</option>
+            <option>Infantil</option>
+            <option>Despedida</option>
+            <option>Solo salón</option>
+            <option>Catering completo</option>
+            <option>Otro</option>
+          </select>
+        </label>
+        <label class="field field--full">
+          <span>Notas</span>
+          <textarea id="notas" rows="3" placeholder="Detalles, requerimientos, etc."></textarea>
+        </label>
+      </div>
+
+      <!-- Acciones -->
+      <div class="row gap">
+        <button type="submit" class="btn">Guardar y abrir WhatsApp</button>
+        <button type="button" id="btnSoloGuardar" class="btn btn--ghost">Solo guardar</button>
+      </div>
+      <p class="muted">Sin pagos por ahora. Confirmación por WhatsApp.</p>
+    </form>
+  </section>
+
+  <!-- ===================================== PANEL ADMIN =================================== -->
+  <!-- ===================================== PANEL ADMIN =================================== -->
+<div id="adminModal" class="modal" aria-hidden="true">
+  <div class="modal__dialog">
+    <div class="row between center">
+      <h3>Panel administrador</h3>
+      <button class="icon-btn" id="btnCerrarAdmin" aria-label="Cerrar">✕</button>
+    </div>
+
+    <!-- Login simple -->
+    <div id="adminLogin" class="card">
+      <label class="field">
+        <span>Código de acceso</span>
+        <input type="password" id="adminCode" placeholder="demo: 1234" />
+      </label>
+      <button id="btnEntrar" class="btn">Entrar</button>
+    </div>
+
+    <!-- Panel -->
+    <div id="adminPanel" class="hidden">
+      <div class="row wrap gap">
+        <button id="btnExportCSV" class="btn btn--ghost">Exportar CSV</button>
+        <button id="btnExportJSON" class="btn btn--ghost">Exportar JSON</button>
+        <button id="btnLimpiarPendientes" class="btn btn--ghost">Limpiar pendientes antiguas</button>
+
+        <!-- Switch latido FAB -->
+        <label class="switch">
+          <input type="checkbox" id="toggleHeartbeat" />
+          <span class="slider"></span>
+          <span class="switch__label">Latido WhatsApp</span>
+        </label>
+      </div>
+
+      <!-- Filtros rápidos -->
+      <div class="filters card">
+        <div class="grid filters__grid">
+          <label class="field">
+            <span>Búsqueda</span>
+            <input type="text" id="filtroTexto" placeholder="Cliente, teléfono o notas…" />
+          </label>
+          <label class="field">
+            <span>Estado</span>
+            <select id="filtroEstado">
+              <option value="">Todos</option>
+              <option value="pendiente">Pendiente</option>
+              <option value="confirmada">Confirmada</option>
+              <option value="cancelada">Cancelada</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>Desde</span>
+            <input type="date" id="filtroDesde" />
+          </label>
+          <label class="field">
+            <span>Hasta</span>
+            <input type="date" id="filtroHasta" />
+          </label>
+          <div class="row gap">
+            <button id="btnLimpiarFiltros" class="btn btn--ghost">Limpiar filtros</button>
+            <span class="muted" id="resumenFiltro"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tabla -->
+      <div class="table-wrap">
+        <table class="table" id="tablaReservas">
+          <thead>
+          <tr>
+            <th>Fecha</th><th>Hora</th><th>Cliente</th><th>Teléfono</th><th>Pers.</th><th>Tipo</th><th>Estado</th><th>Acciones</th>
+          </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <!-- =============================== FAB WHATSAPP GLOBAL ================================= -->
+  <a
+  id="fabWA"
+  class="fab fab--wa"
+  href="#"
+  target="_blank"
+  rel="noopener"
+  aria-label="Abrir WhatsApp"
+  data-tip="WhatsApp"
+>
+  <!-- Logo WhatsApp SVG -->
+  <svg viewBox="0 0 32 32" class="fab__icon" aria-hidden="true">
+    <path d="M19.1 17.2c-.2-.1-1.3-.6-1.5-.7s-.3-.1-.5.1-.6.7-.7.8-.3.2-.6.1a6.5 6.5 0 0 1-3.2-2.8c-.2-.3 0-.4.2-.6l.4-.5c.1-.2.1-.3 0-.5l-.7-1.7c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.8.8-1 2-1 3.1 0 1 .7 2.1 1.1 2.6 1.3 1.8 3.1 3.2 5.1 3.9.5.2 1.5.5 2 .6.8.3 1.6.3 2.2.2.7-.1 1.3-.6 1.5-1.2.2-.6.2-1.1.2-1.2 0-.1-.2-.2-.4-.3zM16 4a12 12 0 0 0-10.3 18l-1.3 4.9 5-1.3A12 12 0 1 0 16 4zm0 22.1a10.1 10.1 0 0 1-5.2-1.5l-.4-.2-3 .8.8-2.9-.2-.4A10.1 10.1 0 1 1 26.1 16 10.1 10.1 0 0 1 16 26.1z" fill="currentColor"/>
+  </svg>
+</a>
+    <a id="fabWA" class="fab fab--wa heartbeat" href="#" target="_blank" rel="noopener" aria-label="Abrir WhatsApp" data-tip="WhatsApp">
+  <svg viewBox="0 0 32 32" class="fab__icon" aria-hidden="true">
+    <path d="M19.1 17.2c-.2-.1-1.3-.6-1.5-.7s-.3-.1-.5.1-.6.7-.7.8-.3.2-.6.1a6.5 6.5 0 0 1-3.2-2.8c-.2-.3 0-.4.2-.6l.4-.5c.1-.2.1-.3 0-.5l-.7-1.7c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.8.8-1 2-1 3.1 0 1 .7 2.1 1.1 2.6 1.3 1.8 3.1 3.2 5.1 3.9.5.2 1.5.5 2 .6.8.3 1.6.3 2.2.2.7-.1 1.3-.6 1.5-1.2.2-.6.2-1.1.2-1.2 0-.1-.2-.2-.4-.3zM16 4a12 12 0 0 0-10.3 18l-1.3 4.9 5-1.3A12 12 0 1 0 16 4zm0 22.1a10.1 10.1 0 0 1-5.2-1.5l-.4-.2-3 .8.8-2.9-.2-.4A10.1 10.1 0 1 1 26.1 16 10.1 10.1 0 0 1 16 26.1z" fill="currentColor"/>
+  </svg>
+</a>
+
+
+  <!-- ====================================== SCRIPTS ====================================== -->
+  <script defer src="js/app.js"></script>
+</body>
+</html>
